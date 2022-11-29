@@ -11,15 +11,24 @@ from pydantic import Field
 
 
 class UserBase(BaseModel):
-    user_id: UUID = Field(...)
-    email: EmailStr = Field(...)
+    user_id: UUID = Field(
+        ...,
+        title='User ID',
+    )
+    email: EmailStr = Field(
+        ...,
+        title='Email',
+        example='jeanneg@ntf.com'
+    )
 
 
 class UserLogin(UserBase):
     password: str = Field(
         ...,
         min_length=8,
-        max_length=64
+        max_length=64,
+        title='Password',
+        example='myfunnypassw0rd'
     )
 
 
@@ -27,23 +36,44 @@ class User(UserBase):
     first_name: str = Field(
         ...,
         min_length=1,
-        max_length=50
+        max_length=50,
+        title='First name',
+        example='Jeanne'
     )
     last_name: str = Field(
         ...,
         min_length=1,
-        max_length=50
+        max_length=50,
+        title='Last name',
+        example='Goursaud'
     )
-    birth_date: Optional[date] = Field(default=None)
+    birth_date: Optional[date] = Field(
+        default=None,
+        title='Birth date',
+        example='1996-04-04'
+    )
 
 
 class Tweet(BaseModel):
-    tweet_id: UUID = Field(...)
+    tweet_id: UUID = Field(
+        ...,
+        title='Tweet ID'
+    )
     content: str = Field(
         ...,
         min_length=1,
-        max_length=280
+        max_length=280,
+        title='Tweet content'
     )
-    created_at: datetime = Field(default=datetime.now())
-    updated_at: Optional[datetime] = Field(default=None)
-    by: User = Field(...)
+    created_at: datetime = Field(
+        default=datetime.now(),
+        title='Date and time of the tweet'
+    )
+    updated_at: Optional[datetime] = Field(
+        default=None,
+        title='Date and time of the updated tweet'
+    )
+    created_by: User = Field(
+        ...,
+        title='Tweet author'
+    )
