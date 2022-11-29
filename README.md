@@ -6,6 +6,7 @@ API based on Twitter API created with the framework FastAPI.
 
 Es posible llamar al mismo endpoint con los diferentes métodos HTTP, sin tener la necesidad de agregar un /update, /delete, etc. al final del path:
 
+
 ```py
 @router.get(
     path="/{user_id}",
