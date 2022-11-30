@@ -32,7 +32,7 @@ class PasswordMixin(BaseModel):
     )
 
 
-class UserLogin(PasswordMixin, UserBase):
+class UserLogin(UserBase, PasswordMixin):
     pass
 
 
@@ -58,7 +58,7 @@ class User(UserBase):
     )
 
 
-class UserRegister(PasswordMixin, User):
+class UserRegister(User, PasswordMixin):
     pass
 
 

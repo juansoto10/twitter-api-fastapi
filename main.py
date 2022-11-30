@@ -1,10 +1,14 @@
+# Python
+import json
+from typing import List
+
 # models.py
 from models import UserBase, UserLogin, User, Tweet, UserRegister
 
 # FastAPI
 from fastapi import FastAPI
 from fastapi import status
-from typing import List
+from fastapi import Body
 
 
 app = FastAPI()
@@ -22,7 +26,7 @@ app = FastAPI()
     summary='Register a user',
     tags=['Users']
 )
-def signup():
+def signup(user: UserRegister = Body(...)):
     """
     ## Sign up
 
@@ -31,15 +35,31 @@ def signup():
     ### Parameters:
 
     - Request body parameter:
+
         - **user: UserRegister** -> A user model with user ID, email, first name, last name, birthdate and password.
 
     Returns a JSON with the basic user information:
+
         - user_id: UUID
+
         - email: EmailStr
+
         - first_name: str
+
         - last_name: str
+
         - birth_date: date
     """
+
+    with open('users.json', 'r+', encoding='utf-8') as f:
+        results = json.loads(f.read())
+        user_dict = user.dict()
+        user_dict['user_id'] = str(user_dict['user_id'])
+        user_dict['birth_date'] = str(user_dict['birth_date'])
+        results.append(user_dict)
+        f.seek(0)
+        f.write(json.dumps(results))
+        return user
 
 
 # Login user
