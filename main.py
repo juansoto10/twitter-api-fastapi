@@ -1,5 +1,5 @@
 # models.py
-from models import UserBase, UserLogin, User, Tweet
+from models import UserBase, UserLogin, User, Tweet, UserRegister
 
 # FastAPI
 from fastapi import FastAPI
@@ -23,7 +23,23 @@ app = FastAPI()
     tags=['Users']
 )
 def signup():
-    pass
+    """
+    ## Sign up
+
+    This path operation registers a user in the app and saves the information in the database.
+
+    ### Parameters:
+
+    - Request body parameter:
+        - **user: UserRegister** -> A user model with user ID, email, first name, last name, birthdate and password.
+
+    Returns a JSON with the basic user information:
+        - user_id: UUID
+        - email: EmailStr
+        - first_name: str
+        - last_name: str
+        - birth_date: date
+    """
 
 
 # Login user
@@ -74,6 +90,7 @@ def delete_user():
     pass
 
 
+# Update user
 @app.put(
     path='/users/{user_id}',
     response_model=User,

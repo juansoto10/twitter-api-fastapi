@@ -22,7 +22,7 @@ class UserBase(BaseModel):
     )
 
 
-class UserLogin(UserBase):
+class PasswordMixin(BaseModel):
     password: str = Field(
         ...,
         min_length=8,
@@ -30,6 +30,10 @@ class UserLogin(UserBase):
         title='Password',
         example='myfunnypassw0rd'
     )
+
+
+class UserLogin(PasswordMixin, UserBase):
+    pass
 
 
 class User(UserBase):
@@ -49,9 +53,13 @@ class User(UserBase):
     )
     birth_date: Optional[date] = Field(
         default=None,
-        title='Birth date',
+        title='Birthdate',
         example='1996-04-04'
     )
+
+
+class UserRegister(PasswordMixin, User):
+    pass
 
 
 class Tweet(BaseModel):
